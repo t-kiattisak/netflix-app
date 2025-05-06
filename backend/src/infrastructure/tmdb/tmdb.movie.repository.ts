@@ -19,13 +19,16 @@ export class TmdbMovieRepository implements MovieRepository {
       );
       return res.data.results.map(
         (result) =>
-          new MovieEntity(
-            result.id,
-            result.title,
-            `${this.imageBaseUrl}${result.poster_path}`,
-            result.vote_average,
-            result.release_date?.split('-')[0] ?? 'N/A',
-          ),
+          new MovieEntity({
+            id: result.id,
+            title: result.title,
+            posterUrl: `${this.imageBaseUrl}${result.poster_path}`,
+            rating: result.vote_average,
+            releaseDate: result.release_date ?? 'N/A',
+            originalTitle: result.original_title,
+            overview: result.overview,
+            backdropPath: this.imageBaseUrl + result.backdrop_path,
+          }),
       );
     } catch (error) {
       throw new Error(extractErrorMessage(error));
@@ -39,13 +42,16 @@ export class TmdbMovieRepository implements MovieRepository {
       );
       return res.data.results.map(
         (result) =>
-          new MovieEntity(
-            result.id,
-            result.title,
-            `${this.imageBaseUrl}${result.poster_path}`,
-            result.vote_average,
-            result.release_date?.split('-')[0] ?? 'N/A',
-          ),
+          new MovieEntity({
+            id: result.id,
+            title: result.title,
+            posterUrl: `${this.imageBaseUrl}${result.poster_path}`,
+            rating: result.vote_average,
+            releaseDate: result.release_date ?? 'N/A',
+            originalTitle: result.original_title,
+            overview: result.overview,
+            backdropPath: this.imageBaseUrl + result.backdrop_path,
+          }),
       );
     } catch (error) {
       throw new Error(extractErrorMessage(error));

@@ -11,7 +11,22 @@ export class MovieDto {
   @ApiProperty()
   @IsString()
   @Expose()
-  name: string;
+  title: string;
+
+  @ApiProperty()
+  @IsString()
+  @Expose()
+  originalTitle: string;
+
+  @ApiProperty()
+  @IsString()
+  @Expose()
+  overview: string;
+
+  @ApiProperty()
+  @IsString()
+  @Expose()
+  backdropPath: string;
 
   @ApiProperty()
   @IsString()
@@ -26,5 +41,5 @@ export class MovieDto {
   @ApiProperty()
   @IsString()
   @Expose()
-  releaseYear: string;
+  releaseDate: string;
 }
