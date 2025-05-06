@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { HttpModule, HttpModuleOptions } from '@nestjs/axios';
-import { TmdbMovieRepository } from './tmdb.movie.repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TmdbMovieRepositoryImpl } from './tmdb.movie.repository.impl';
+import { TmdbMovieRepository } from './tmdb.movie.repository';
+import { MovieRepository } from '@/domain/repositories/movie.repository';
 
 @Module({
   imports: [
@@ -17,7 +19,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  providers: [TmdbMovieRepository],
-  exports: [TmdbMovieRepository, HttpModule],
+  providers: [
+    TmdbMovieRepositoryImpl,
+    TmdbMovieRepository,
+    {
+      provide: MovieRepository,
+      useExisting: TmdbMovieRepository,
+    },
+  ],
+  exports: [MovieRepository],
 })
 export class TmdbModule {}

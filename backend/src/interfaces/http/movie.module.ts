@@ -1,19 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MovieController } from './movie.controller';
-import { GetPopularMoviesUseCase } from '../../application/use-cases/get-popular-movies.usecase';
-import { TmdbMovieRepository } from '../../infrastructure/tmdb/tmdb.movie.repository';
+import { MoviesUseCase } from '../../application/use-cases/movies.usecase';
 import { TmdbModule } from '@/infrastructure/tmdb/tmdb.module';
+import { MovieRepository } from '@/domain/repositories/movie.repository';
 
 @Module({
   imports: [TmdbModule],
   controllers: [MovieController],
   providers: [
-    TmdbMovieRepository,
     {
-      provide: GetPopularMoviesUseCase,
-      useFactory: (repo: TmdbMovieRepository) =>
-        new GetPopularMoviesUseCase(repo),
-      inject: [TmdbMovieRepository],
+      provide: MoviesUseCase,
+      useFactory: (repo: MovieRepository) => new MoviesUseCase(repo),
+      inject: [MovieRepository],
     },
   ],
 })

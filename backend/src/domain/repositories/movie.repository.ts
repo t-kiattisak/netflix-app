@@ -1,6 +1,6 @@
 import { MovieEntity } from '../entities/movie.entity';
 
-export interface MovieRepository {
-  getPopularMovies(): Promise<MovieEntity[]>;
-  getTopRatedMovies(): Promise<MovieEntity[]>;
+export abstract class MovieRepository {
+  abstract getPopularMovies(): Promise<MovieEntity[]>;
+  abstract getTopRatedMovies(): Promise<MovieEntity[]>;
 }

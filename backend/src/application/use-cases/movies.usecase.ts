@@ -1,10 +1,14 @@
 import { MovieEntity } from '@/domain/entities/movie.entity';
 import { MovieRepository } from '@/domain/repositories/movie.repository';
 
-export class GetPopularMoviesUseCase {
+export class MoviesUseCase {
   constructor(private readonly movieRepo: MovieRepository) {}
 
-  async execute(): Promise<MovieEntity[]> {
+  async getPopularMovies(): Promise<MovieEntity[]> {
     return this.movieRepo.getPopularMovies();
+  }
+
+  async getTopRatedMovies(): Promise<MovieEntity[]> {
+    return this.movieRepo.getTopRatedMovies();
   }
 }

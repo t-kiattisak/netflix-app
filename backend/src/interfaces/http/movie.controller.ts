@@ -2,11 +2,11 @@ import { Controller, Get } from '@nestjs/common';
 import { MovieDto } from './dtos/movie.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
-import { GetPopularMoviesUseCase } from '@/application/use-cases/get-popular-movies.usecase';
+import { MoviesUseCase } from '@/application/use-cases/movies.usecase';
 
 @Controller('movies')
 export class MovieController {
-  constructor(private readonly useCase: GetPopularMoviesUseCase) {}
+  constructor(private readonly useCase: MoviesUseCase) {}
 
   @Get('popular')
   @ApiOperation({ summary: 'Get popular movies' })
@@ -16,7 +16,7 @@ export class MovieController {
     type: [MovieDto],
   })
   async getPopular(): Promise<MovieDto[]> {
-    const movies = await this.useCase.execute();
+    const movies = await this.useCase.getPopularMovies();
     return plainToInstance(MovieDto, movies);
   }
 
@@ -28,7 +28,7 @@ export class MovieController {
     type: [MovieDto],
   })
   async getTopRated(): Promise<MovieDto[]> {
-    const movies = await this.useCase.execute();
+    const movies = await this.useCase.getTopRatedMovies();
     return plainToInstance(MovieDto, movies);
   }
 }
