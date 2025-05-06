@@ -1,6 +1,6 @@
 "use client"
 
-import { popularMoviesOptions } from "@/application/use-cases/moviesOptions"
+import { popularMoviesOptions } from "@/application/useCases/moviesOptions"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import React from "react"
 
