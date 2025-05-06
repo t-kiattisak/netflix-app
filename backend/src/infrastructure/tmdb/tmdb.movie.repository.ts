@@ -31,4 +31,24 @@ export class TmdbMovieRepository implements MovieRepository {
       throw new Error(extractErrorMessage(error));
     }
   }
+
+  async getTopRatedMovies(): Promise<MovieEntity[]> {
+    try {
+      const res = await firstValueFrom(
+        this.httpService.get<TmdbMovieResponse>('/movie/top_rated'),
+      );
+      return res.data.results.map(
+        (result) =>
+          new MovieEntity(
+            result.id,
+            result.title,
+            `${this.imageBaseUrl}${result.poster_path}`,
+            result.vote_average,
+            result.release_date?.split('-')[0] ?? 'N/A',
+          ),
+      );
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
+  }
 }

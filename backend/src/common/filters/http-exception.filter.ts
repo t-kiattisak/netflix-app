@@ -38,6 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       success: false,
       data: null,
       message: typeof message === 'string' ? message : message['message'],
+      timestamp: new Date().toISOString(),
     });
   }
 }

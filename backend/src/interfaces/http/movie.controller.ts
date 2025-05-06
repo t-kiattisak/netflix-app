@@ -19,4 +19,16 @@ export class MovieController {
     const movies = await this.useCase.execute();
     return plainToInstance(MovieDto, movies);
   }
+
+  @Get('top-rated')
+  @ApiOperation({ summary: 'Get top-rated movies' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of top-rated movies',
+    type: [MovieDto],
+  })
+  async getTopRated(): Promise<MovieDto[]> {
+    const movies = await this.useCase.execute();
+    return plainToInstance(MovieDto, movies);
+  }
 }
