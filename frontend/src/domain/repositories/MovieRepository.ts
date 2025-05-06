@@ -1,5 +1,6 @@
-import { Movie } from "../entities/Movie"
+import { MovieEntity } from "../entities/MovieEntity"
 
 export interface MovieRepository {
-  getPopularMovies(): Promise<Movie[]>
+  getPopularMovies(): Promise<MovieEntity[]>
+  getTopRatedMovies(): Promise<MovieEntity[]>
 }
