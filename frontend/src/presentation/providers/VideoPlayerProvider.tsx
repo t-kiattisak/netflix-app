@@ -5,10 +5,15 @@ import type Player from "video.js/dist/types/player"
 import { createSafeContext } from "./CreateSafeContext"
 
 type VideoPlayerContextType = {
-  player: Player | null
-  muted: boolean
-  setPlayer: (player: Player) => void
-  toggleMute: () => void
+  players: Record<string, Player>
+  mutedMap: Record<string, boolean>
+  setPlayer: (videoId: string, player: Player) => void
+  toggleMute: (videoId: string) => void
+  isMuted: (videoId: string) => boolean
+  playOnly: (videoId: string) => void
+  pauseVideo: (videoId: string) => void
+  pauseButKeepActive: (videoId: string) => void
+  activeVideoId: string | null
 }
 
 export const [VideoPlayerContextProvider, useVideoPlayer] =
@@ -21,25 +26,66 @@ export const VideoPlayerProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [muted, setMuted] = useState(true)
-  const playerRef = useRef<Player | null>(null)
+  const playersRef = useRef<Record<string, Player>>({})
+  const [mutedMap, setMutedMap] = useState<Record<string, boolean>>({})
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
 
-  const setPlayer = (player: Player) => {
-    playerRef.current = player
-    player.muted(muted)
+  const setPlayer = (videoId: string, player: Player) => {
+    playersRef.current[videoId] = player
+    player.muted(mutedMap[videoId] ?? true)
+    setActiveVideoId(videoId)
   }
 
-  const toggleMute = () => {
-    if (playerRef.current) {
-      const newMuted = !muted
-      playerRef.current.muted(newMuted)
-      setMuted(newMuted)
+  const toggleMute = (videoId: string) => {
+    const player = playersRef.current[videoId]
+    if (!player) return
+
+    const newMuted = !(mutedMap[videoId] ?? true)
+    player.muted(newMuted)
+    setMutedMap((prev) => ({ ...prev, [videoId]: newMuted }))
+  }
+
+  const isMuted = (videoId: string) => mutedMap[videoId] ?? true
+
+  const playOnly = (videoId: string) => {
+    Object.entries(playersRef.current).forEach(([id, player]) => {
+      if (id === videoId) {
+        player.play()
+      } else {
+        player.pause()
+      }
+    })
+    setActiveVideoId(videoId)
+  }
+
+  const pauseButKeepActive = (videoId: string) => {
+    const player = playersRef.current[videoId]
+    if (player) player.pause()
+  }
+
+  const pauseVideo = (videoId: string) => {
+    const player = playersRef.current[videoId]
+    if (player) {
+      player.pause()
+      if (activeVideoId === videoId) {
+        setActiveVideoId(null)
+      }
     }
   }
 
   return (
     <VideoPlayerContextProvider
-      value={{ player: playerRef.current, muted, setPlayer, toggleMute }}
+      value={{
+        activeVideoId,
+        players: playersRef.current,
+        mutedMap,
+        setPlayer,
+        toggleMute,
+        isMuted,
+        playOnly,
+        pauseVideo,
+        pauseButKeepActive,
+      }}
     >
       {children}
     </VideoPlayerContextProvider>

@@ -19,6 +19,6 @@ export const movieRepositoryImpl: MovieRepository = {
 
   async getMovieDetails(movieId: number): Promise<MovieDetailEntity> {
     const res = await fetchMovieDetails(movieId)
-    return res.data
+    return res.data.data
   },
 }

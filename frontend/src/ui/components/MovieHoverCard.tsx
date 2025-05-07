@@ -8,6 +8,8 @@ import {
   MotionDialogTrigger,
 } from "./animations/MotionDialog"
 import { MoviePreview } from "./MoviePreview"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { movieDetailOptions } from "@/application/useCases/moviesOptions"
 // import { YoutubePlayer } from "./YoutubePlayer"
 
 interface MovieHoverCardProps {
@@ -17,9 +19,11 @@ interface MovieHoverCardProps {
   maturityRating: string
   genres: string[]
   matchPercentage?: string
+  movieID: number
 }
 
 export function MovieHoverCard({
+  movieID,
   posterUrl,
   title,
   duration,
@@ -27,6 +31,10 @@ export function MovieHoverCard({
   genres,
   matchPercentage = "84%",
 }: MovieHoverCardProps) {
+  const { data: movieDetail, isLoading } = useSuspenseQuery(
+    movieDetailOptions(movieID)
+  )
+
   return (
     <div className='bg-neutral-900 overflow-hidden shadow-2xl'>
       <div className='relative w-full h-[180px] overflow-hidden'>
@@ -56,26 +64,22 @@ export function MovieHoverCard({
             </MotionDialogTrigger>
 
             <MotionDialogContent>
-              <MoviePreview
-                preview={{
-                  backdropUrl: posterUrl,
-                  year: 2023,
-                  episodeCount: 28,
-                  maturityRating: "16+",
-                  genre: "genre",
-                  cast: "cast",
-                  description: "description",
-                  episodes: [
-                    {
-                      id: 1,
-                      title: "The Journey's End",
-                      duration: "26m",
-                      thumbnailUrl: posterUrl,
-                      description: "description",
-                    },
-                  ],
-                }}
-              />
+              {isLoading ? (
+                <div>...loading</div>
+              ) : (
+                <MoviePreview
+                  preview={{
+                    backdropUrl: movieDetail.posterPath,
+                    year: movieDetail.releaseDate?.split("-")[0],
+                    maturityRating: "16+",
+                    videoId: movieDetail.videos[0].key,
+                    genre: movieDetail.genres
+                      .map(({ name }) => name)
+                      .join(", "),
+                    description: movieDetail.overview,
+                  }}
+                />
+              )}
             </MotionDialogContent>
           </MotionDialogRoot>
         </div>

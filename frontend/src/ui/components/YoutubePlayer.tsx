@@ -5,6 +5,7 @@ import videojs from "video.js"
 import type Player from "video.js/dist/types/player"
 import "video.js/dist/video-js.css"
 import "videojs-youtube"
+
 import { useVideoPlayer } from "@/presentation/providers/VideoPlayerProvider"
 
 type YoutubePlayerProps = {
@@ -18,7 +19,8 @@ export function YoutubePlayer({
 }: YoutubePlayerProps) {
   const playerRef = useRef<Player | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { setPlayer, muted } = useVideoPlayer()
+
+  const { setPlayer, playOnly } = useVideoPlayer()
 
   useEffect(() => {
     if (!containerRef.current || playerRef.current) return
@@ -31,24 +33,25 @@ export function YoutubePlayer({
       autoplay,
       controls: false,
       loop: true,
-      muted,
+      muted: true, // default mute
       responsive: true,
       fluid: true,
       sources: [
         {
           type: "video/youtube",
-          src: `https://www.youtube.com/watch?v=${videoId}&modestbranding=1&rel=0&enablejsapi=1`,
+          src: `https://www.youtube.com/watch?v=${videoId}`,
         },
       ],
       youtube: {
-        modestbranding: 0,
+        modestbranding: 1,
         rel: 0,
         iv_load_policy: 3,
       },
     })
 
     playerRef.current = player
-    setPlayer(player)
+    setPlayer(videoId, player)
+    playOnly(videoId)
 
     return () => {
       if (player && !player.isDisposed()) {

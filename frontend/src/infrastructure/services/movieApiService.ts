@@ -18,14 +18,8 @@ export const fetchTopRatedMovies = async () => {
 }
 
 export const fetchMovieDetails = async (movieId: number) => {
-  const response = await network.get<MovieDetailEntity>(
-    `https://api.themoviedb.org/3/movie/${movieId}`,
-    {
-      params: {
-        api_key: process.env.API_KEY,
-        append_to_response: "videos",
-      },
-    }
+  const response = await network.get<BaseResponse<MovieDetailEntity>>(
+    `movies/${movieId}`
   )
   return response
 }

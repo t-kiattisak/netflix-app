@@ -152,7 +152,7 @@ export function MotionDialog({
               onClick={onClose}
               variant='outline'
               size='icon'
-              className='absolute rounded-full top-4 right-4 z-10 text-white bg-black'
+              className='absolute rounded-full top-4 right-4 z-50 text-white bg-black'
             >
               <X className='w-6 h-6' />
             </Button>

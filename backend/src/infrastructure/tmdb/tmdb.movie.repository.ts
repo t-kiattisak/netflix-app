@@ -44,6 +44,7 @@ export class TmdbMovieRepository implements MovieRepository {
       voteCount: data.vote_count,
       tagline: data.tagline,
       status: data.status,
+      videos: data.videos.results,
       homepage: data.homepage,
     });
   }

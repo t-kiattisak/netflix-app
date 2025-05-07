@@ -71,6 +71,7 @@ export const HomePage = () => {
                 </HoverPreviewTrigger>
                 <HoverPreviewContent>
                   <MovieHoverCard
+                    movieID={movie.id}
                     posterUrl={movie.posterUrl}
                     title={movie.title}
                     duration='1h 49m'

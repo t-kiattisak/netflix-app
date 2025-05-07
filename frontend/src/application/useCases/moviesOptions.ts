@@ -19,7 +19,7 @@ export const topRatedMoviesOptions = queryOptions({
 export const movieDetailOptions = (movieId: number) =>
   queryOptions({
     enabled: !!movieId,
-    staleTime: 1000,
+    staleTime: 60 * 60 * 1000,
     queryKey: ["movies-detail", movieId],
     queryFn: () => fetchMovieDetailUseCase(movieRepositoryImpl)(movieId),
   })
