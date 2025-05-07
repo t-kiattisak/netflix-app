@@ -17,13 +17,12 @@ export const fetchTopRatedMovies = async () => {
   return response
 }
 
-// https://api.themoviedb.org/3/movie/335984?api_key=7787355e0e909acc11701b58653d589c&append_to_response=videos
 export const fetchMovieDetails = async (movieId: number) => {
   const response = await network.get<MovieDetailEntity>(
     `https://api.themoviedb.org/3/movie/${movieId}`,
     {
       params: {
-        api_key: "7787355e0e909acc11701b58653d589c",
+        api_key: process.env.API_KEY,
         append_to_response: "videos",
       },
     }
