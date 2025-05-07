@@ -9,6 +9,7 @@ interface MovieProps {
   backdropPath: string;
   match: number;
   voteAverage: number;
+  genreIds: number[];
 }
 
 export class MovieEntity {
@@ -52,5 +53,9 @@ export class MovieEntity {
 
   get voteAverage() {
     return this.props.voteAverage;
+  }
+
+  get genreIds() {
+    return this.props.genreIds;
   }
 }

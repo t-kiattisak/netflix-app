@@ -52,4 +52,9 @@ export class MovieDto {
   @IsNumber()
   @Expose()
   voteAverage: number;
+
+  @ApiProperty({ type: [Number] })
+  @IsNumber({}, { each: true })
+  @Expose()
+  genreIds: number[];
 }
