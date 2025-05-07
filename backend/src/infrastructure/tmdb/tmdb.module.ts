@@ -4,6 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TmdbMovieRepositoryImpl } from './tmdb.movie.repository.impl';
 import { TmdbMovieRepository } from './tmdb.movie.repository';
 import { MovieRepository } from '@/domain/repositories/movie.repository';
+import { TmdbGenreRepository } from './tmdb.genre.repository';
+import { TmdbGenreRepositoryImpl } from './tmdb.genre.repository.impl';
+import { GenreRepository } from '@/domain/repositories/genre.repository';
 
 @Module({
   imports: [
@@ -26,7 +29,13 @@ import { MovieRepository } from '@/domain/repositories/movie.repository';
       provide: MovieRepository,
       useExisting: TmdbMovieRepository,
     },
+    TmdbGenreRepositoryImpl,
+    TmdbGenreRepository,
+    {
+      provide: GenreRepository,
+      useExisting: TmdbGenreRepository,
+    },
   ],
-  exports: [MovieRepository],
+  exports: [MovieRepository, GenreRepository],
 })
 export class TmdbModule {}

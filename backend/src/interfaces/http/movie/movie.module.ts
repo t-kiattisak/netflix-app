@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MovieController } from './movie.controller';
-import { MoviesUseCase } from '../../application/use-cases/movies.usecase';
 import { TmdbModule } from '@/infrastructure/tmdb/tmdb.module';
 import { MovieRepository } from '@/domain/repositories/movie.repository';
+import { MoviesUseCase } from '@/application/use-cases/movies.usecase';
 
 @Module({
   imports: [TmdbModule],

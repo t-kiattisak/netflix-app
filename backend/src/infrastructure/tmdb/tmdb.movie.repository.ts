@@ -22,6 +22,8 @@ export class TmdbMovieRepository implements MovieRepository {
           originalTitle: result.original_title,
           overview: result.overview,
           backdropPath: this.imageBaseUrl + result.backdrop_path,
+          match: Math.round(result.vote_average * 10),
+          voteAverage: result.vote_average,
         }),
     );
   }
@@ -39,6 +41,8 @@ export class TmdbMovieRepository implements MovieRepository {
           originalTitle: result.original_title,
           overview: result.overview,
           backdropPath: this.imageBaseUrl + result.backdrop_path,
+          match: Math.round(result.vote_average * 10),
+          voteAverage: result.vote_average,
         }),
     );
   }

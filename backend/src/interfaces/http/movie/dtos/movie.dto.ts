@@ -42,4 +42,14 @@ export class MovieDto {
   @IsString()
   @Expose()
   releaseDate: string;
+
+  @ApiProperty()
+  @IsNumber()
+  @Expose()
+  match: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @Expose()
+  voteAverage: number;
 }
