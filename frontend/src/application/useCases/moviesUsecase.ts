@@ -1,3 +1,4 @@
+import { MovieDetailEntity } from "@/domain/entities/MovieDetailEntity"
 import { MovieEntity } from "@/domain/entities/MovieEntity"
 import { MovieRepository } from "@/domain/repositories/MovieRepository"
 
@@ -9,6 +10,14 @@ export const fetchPopularMoviesUseCase = async (
 
 export const fetchTopRatedMoviesUseCase = async (
   repo: MovieRepository
-): Promise<MovieEntity[]> => {
-  return repo.getTopRatedMovies()
+): Promise<MovieEntity> => {
+  const topRated = await repo.getTopRatedMovies()
+  return topRated[0]
 }
+
+export const fetchMovieDetailUseCase =
+  (repo: MovieRepository) =>
+  async (movieId: number): Promise<MovieDetailEntity> => {
+    const detail = await repo.getMovieDetails(movieId)
+    return detail
+  }

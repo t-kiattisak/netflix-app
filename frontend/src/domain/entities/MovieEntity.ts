@@ -6,4 +6,8 @@ export type MovieEntity = {
   releaseYear: string
   originalTitle?: string
   overview?: string
+  backdropPath?: string
+  match: number
+  voteAverage: number
+  genreIds: number[]
 }

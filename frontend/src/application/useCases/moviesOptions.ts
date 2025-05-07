@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query"
 import {
+  fetchMovieDetailUseCase,
   fetchPopularMoviesUseCase,
   fetchTopRatedMoviesUseCase,
 } from "./moviesUsecase"
@@ -14,3 +15,11 @@ export const topRatedMoviesOptions = queryOptions({
   queryKey: ["movies", "top-rated"],
   queryFn: () => fetchTopRatedMoviesUseCase(movieRepositoryImpl),
 })
+
+export const movieDetailOptions = (movieId: number) =>
+  queryOptions({
+    enabled: !!movieId,
+    staleTime: 1000,
+    queryKey: ["movies-detail", movieId],
+    queryFn: () => fetchMovieDetailUseCase(movieRepositoryImpl)(movieId),
+  })
