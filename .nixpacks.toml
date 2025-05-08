@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["nodejs"]
-
-[phases.build]
-cmds = ["cd backend && pnpm install && pnpm run build"]
-
-[start]
-cmd = "cd backend && pnpm run start:prod"
