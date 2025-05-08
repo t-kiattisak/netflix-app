@@ -2,7 +2,6 @@
 
 - **Framework**: Next.js (App Router)
 - **Styling**: Tailwind CSS
-- **State Management**: Zustand
 - **Data Fetching**: TanStack Query v5
 - **Localization (i18n)**: next-intl
 - **Architecture**: Clean Architecture (แบ่ง `domain`, `application`, `infrastructure`, `presentation`, `ui`)
