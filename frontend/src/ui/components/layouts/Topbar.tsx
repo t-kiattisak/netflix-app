@@ -60,7 +60,7 @@ export function Topbar() {
           </div>
         </div>
 
-        <nav className='order-3 w-full md:order-2 md:w-auto flex flex-wrap gap-4 mt-2 md:mt-0 px-2'>
+        <nav className='order-3 w-full md:order-2 md:w-auto flex flex-wrap gap-4 mt-2 md:mt-0 px-2 pl-4'>
           {navItems.map((item) => (
             <span
               key={item}

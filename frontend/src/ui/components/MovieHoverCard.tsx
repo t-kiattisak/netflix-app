@@ -72,7 +72,7 @@ export function MovieHoverCard({
                     backdropUrl: movieDetail.posterPath,
                     year: movieDetail.releaseDate?.split("-")[0],
                     maturityRating: "16+",
-                    videoId: movieDetail.videos[0].key,
+                    videoId: movieDetail.videos[0]?.key,
                     genre: movieDetail.genres
                       .map(({ name }) => name)
                       .join(", "),
