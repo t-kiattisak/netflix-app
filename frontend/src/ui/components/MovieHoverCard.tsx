@@ -39,7 +39,13 @@ export function MovieHoverCard({
     <div className='bg-neutral-900 overflow-hidden shadow-2xl'>
       <div className='relative w-full h-[180px] overflow-hidden'>
         {/* <YoutubePlayer videoId='geFtxCSz8xI' /> */}
-        <Image src={posterUrl} alt={title} fill className='object-cover' />
+        <Image
+          src={posterUrl}
+          alt={title}
+          fill
+          className='object-cover'
+          sizes='(min-width: 60em) 24vw,(min-width: 28em) 45vw, 100vw'
+        />
       </div>
 
       <div className='p-4 space-y-3'>

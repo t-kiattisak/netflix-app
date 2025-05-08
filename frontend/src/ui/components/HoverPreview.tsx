@@ -88,7 +88,7 @@ export function HoverPreviewContent({ children }: { children: ReactNode }) {
 
   return (
     <Portal container={context.previewRef.current}>
-      <AnimatePresence>
+      <AnimatePresence mode='wait'>
         {context.show && rect && (
           <MotionContainer
             open

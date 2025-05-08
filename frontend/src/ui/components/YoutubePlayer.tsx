@@ -33,7 +33,7 @@ export function YoutubePlayer({
       autoplay,
       controls: false,
       loop: true,
-      muted: true, // default mute
+      muted: true,
       responsive: true,
       fluid: true,
       sources: [
