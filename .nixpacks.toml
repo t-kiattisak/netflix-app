@@ -1,0 +1,14 @@
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs", "pnpm"]
+
+[phases.build]
+cmds = [
+  "cd backend",
+  "pnpm install",
+  "pnpm run build"
+]
+
+[start]
+cmd = "cd backend && pnpm run start:prod"
