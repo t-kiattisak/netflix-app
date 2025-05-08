@@ -31,12 +31,13 @@ export function Topbar() {
       )}
     >
       <div className='flex flex-wrap items-center w-full text-white'>
-        <div className='order-1'>
+        <div className='order-1 w-[100px] relative h-8'>
           <Image
             src='/images/netflix-logo.png'
-            width={100}
-            height={50}
+            fill
+            sizes='(min-width: 60em) 24vw,(min-width: 28em) 45vw, 100vw'
             alt='Netflix Logo'
+            priority
           />
         </div>
 

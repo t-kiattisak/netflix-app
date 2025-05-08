@@ -29,7 +29,7 @@ type MovieSectionProps = {
 export const MovieSection = ({ title, movies }: MovieSectionProps) => {
   return (
     <div>
-      <p className='text-white font-bold text-sm md:text-4xl pb-2 pl-4'>
+      <p className='text-white font-bold text-sm md:text-2xl pb-2 pl-4'>
         {title}
       </p>
       <Carousel
@@ -55,6 +55,7 @@ export const MovieSection = ({ title, movies }: MovieSectionProps) => {
                       alt={movie.title}
                       className='object-center object-cover'
                       fill
+                      sizes='(min-width: 60em) 24vw,(min-width: 28em) 45vw, 100vw'
                     />
                   </div>
                 </HoverPreviewTrigger>

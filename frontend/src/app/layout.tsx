@@ -4,6 +4,8 @@ import "./globals.css"
 import "video.js/dist/video-js.css"
 import { Providers } from "./providers"
 import { Topbar } from "@/ui/components/layouts/Topbar"
+import { NextIntlClientProvider } from "next-intl"
+import { getLocale } from "next-intl/server"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,18 +22,21 @@ export const metadata: Metadata = {
   description: "Netflix app",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
   return (
-    <html lang='en'>
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
-        <Topbar />
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider>
+          <Topbar />
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

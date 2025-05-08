@@ -13,8 +13,10 @@ import { TopTrailer } from "@/ui/components/TopTrailer"
 
 import { genreMoviesOptions } from "@/application/useCases/genreOptions"
 import { MovieSection } from "@/ui/components/MovieSection"
+import { useTranslations } from "next-intl"
 
 export const HomePage = () => {
+  const t = useTranslations("Home")
   const { data, isLoading } = useSuspenseQuery(popularMoviesOptions)
   const { data: genreMoviesData } = useSuspenseQuery(genreMoviesOptions)
   const { data: recommendedMoviesData } = useSuspenseQuery(
@@ -71,13 +73,10 @@ export const HomePage = () => {
       {movieVideo.id && <TopTrailer movieId={movieVideo.id} />}
 
       <div className='flex flex-col gap-10'>
+        <MovieSection title={t("weThinkYouLove")} movies={moviePoplars} />
+        <MovieSection title={t("nowMovies")} movies={nowMovie} />
         <MovieSection
-          title='We Think You’ll Love These'
-          movies={moviePoplars}
-        />
-        <MovieSection title='Now Movies' movies={nowMovie} />
-        <MovieSection
-          title='Top 10 Movies in Thailand Today'
+          title={t("top10Thailand")}
           movies={top10MoviesInThailand}
         />
       </div>

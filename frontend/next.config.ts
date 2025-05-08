@@ -1,4 +1,7 @@
+import createNextIntlPlugin from "next-intl/plugin"
 import type { NextConfig } from "next"
+
+const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -13,7 +16,9 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
       },
     ],
+    deviceSizes: [640, 768, 1024, 1200],
+    imageSizes: [16, 32, 48, 64, 96],
   },
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig)
