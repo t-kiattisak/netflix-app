@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 Netflix Web Application - Frontend
 
-## Getting Started
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Data Fetching**: TanStack Query v5
+- **Localization (i18n)**: next-intl
+- **Architecture**: Clean Architecture (แบ่ง `domain`, `application`, `infrastructure`, `presentation`, `ui`)
+- **Video Player**: video.js (YouTube embed)
 
-First, run the development server:
+## 📁 Project Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+src/
+├── app/                  # Entry point, routing, layout, locale
+│   └── [locale]/         # Localization-aware routing
+│   └── layout.tsx        # NextIntlProvider, Topbar, Providers
+│   └── middleware.ts     # Next-Intl middleware
+│
+├── domain/               # Entity และ Repository interface
+│   ├── entities/
+│   ├── repositories/
+│
+├── application/          # UseCases สำหรับ mapping ข้อมูล
+│   └── useCases/
+│
+├── infrastructure/       # data fetching, query functions
+│   ├── http/
+│   ├── query/
+│   ├── services/
+│
+├── presentation/         # UI logic: hooks, providers, utils
+│   ├── hooks/
+│   ├── providers/
+│
+├── ui/                   # Pure UI Components + Layout
+│   ├── components/
+│   └── layouts/
+│
+├── screens/              # Per-page composition (e.g. homepage)
+│   └── home/
+│
+├── messages/             # JSON translation messages
+│   ├── en-US.json
+│   └── th-TH.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features Implemented
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ Home page
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  - Top Trailer section (autoplay video, one video at a time)
+  - Recommended Movies
+  - Now Playing
+  - Top 10 in Thailand
 
-## Learn More
+- ✅ Hover Preview
 
-To learn more about Next.js, take a look at the following resources:
+  - MovieHoverCard ปรากฏเมื่อ mouseover
+  - รองรับ interaction แบบ Netflix จริง
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ✅ Localization Support
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  - `/en`, `/th` switch ได้สมบูรณ์
+  - ค่า language ถูกแนบใน API call
 
-## Deploy on Vercel
+- ✅ Global Video Context
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - เปิดได้ทีละ video เดียว
+  - ระบบ mute/unmute ที่ track ต่อ videoId
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- ✅ Clean Architecture
+  - useCases ↔ repository ↔ query layer
+  - มี separation ที่ชัดเจนระหว่าง layer
+
+## 📦 Installation & Run
+
+```bash
+# Install dependencies
+npm install
+
+# Dev mode
+npm run dev
+
+# Build production
+npm run build && npm start
+```
+
+## 🌐 Environment Variables
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
+
+## 🗣 Languages Supported
+
+- 🇺🇸 English (en-US)
+- 🇹🇭 Thai (th-TH)
