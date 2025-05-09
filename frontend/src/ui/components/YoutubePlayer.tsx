@@ -57,6 +57,7 @@ export function YoutubePlayer({
           src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
           alt='Video thumbnail'
           fill
+          fetchPriority='high'
           className='object-cover rounded-lg'
           priority
         />
