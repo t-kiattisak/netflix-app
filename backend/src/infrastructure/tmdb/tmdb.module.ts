@@ -14,12 +14,20 @@ import { GenreRepository } from '@/domain/repositories/genre.repository';
     HttpModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService): HttpModuleOptions => ({
-        baseURL: config.get<string>('TMDB_BASE_URL'),
-        headers: {
-          Authorization: `Bearer ${config.get<string>('TMDB_ACCESS_TOKEN')}`,
-        },
-      }),
+      useFactory: (config: ConfigService): HttpModuleOptions => {
+        const baseURL = config.get<string>('TMDB_BASE_URL');
+        const token = config.get<string>('TMDB_ACCESS_TOKEN');
+
+        console.log('TMDB_BASE_URL:', baseURL);
+        console.log('TMDB_ACCESS_TOKEN:', token?.slice(0, 10) + '...');
+
+        return {
+          baseURL: baseURL,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
     }),
   ],
   providers: [

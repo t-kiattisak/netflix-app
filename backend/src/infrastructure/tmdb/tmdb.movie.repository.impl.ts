@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { TmdbMovieResponse } from '../types/tmdb-movie-response';
@@ -8,12 +12,19 @@ import { TmdbMovieDetailRes } from '../types/tmdb-movie-detail-res';
 @Injectable()
 export class TmdbMovieRepositoryImpl {
   constructor(private readonly httpService: HttpService) {}
+  private readonly logger = new Logger(TmdbMovieRepositoryImpl.name);
 
   async fetchPopular(): Promise<TmdbMovieResponse> {
-    const res = await firstValueFrom(
-      this.httpService.get<TmdbMovieResponse>('/movie/popular'),
-    );
-    return res.data;
+    try {
+      const res = await firstValueFrom(
+        this.httpService.get<TmdbMovieResponse>('/movie/popular'),
+      );
+      this.logger.log('Fetched popular movies');
+      return res.data;
+    } catch (error) {
+      this.logger.error('Error fetching popular movies', error);
+      throw new InternalServerErrorException('TMDB API error');
+    }
   }
 
   async fetchTopRated(): Promise<TmdbMovieResponse> {

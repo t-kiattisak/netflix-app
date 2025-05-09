@@ -1,22 +1,24 @@
-/bin/
-/pkg/
-*.exe
-*.out
-*.o
-node_modules/
-vendor/
+# Node
+node_modules
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
 
-.DS_Store
-.vscode/
-.idea/
-*.swp
+# Build output
+dist
+*.tsbuildinfo
 
-logs/
-*.log
-*.tmp
-
-.dockerignore
-docker-compose.override.yml
-
+# Env
 .env
-.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
