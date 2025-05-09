@@ -33,9 +33,10 @@ export function YoutubePlayer({
   if (!BaseReactPlayer.canPlay(youTubeUrl)) {
     return (
       <Image
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
         alt='Video thumbnail'
         fill
+        fetchPriority='high'
         className='object-cover rounded-lg'
         priority
       />
@@ -48,12 +49,12 @@ export function YoutubePlayer({
         <link
           rel='preload'
           as='image'
-          href={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          href={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
         />
       </Head>
       {!ready && (
         <Image
-          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
           alt='Video thumbnail'
           fill
           className='object-cover rounded-lg'
