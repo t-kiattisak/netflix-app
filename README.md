@@ -40,17 +40,6 @@ Built for real-world use with scalable architecture and modern web technologies.
 
 ---
 
-## 🧪 Test Metrics
-
-| Metric                   | Desktop | Mobile |
-| ------------------------ | ------- | ------ |
-| First Contentful Paint   | 0.3s    | 1.9s   |
-| Largest Contentful Paint | 0.7s    | 2.1s   |
-| Speed Index              | 4.2s    | 5.1s   |
-| Total Blocking Time      | 480ms   | 620ms  |
-
----
-
 ## 👨‍💻 Author
 
 **เกียรติศักดิ์ โจมรัมย์**  
