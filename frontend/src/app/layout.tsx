@@ -6,7 +6,6 @@ import { Topbar } from "@/ui/components/layouts/Topbar"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale } from "next-intl/server"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import Head from "next/head"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +32,16 @@ export default async function RootLayout({
   const locale = await getLocale()
   return (
     <html lang={locale}>
-      <Head>
+      <head>
         <link rel='preconnect' href='https://www.youtube.com' />
         <link rel='preconnect' href='https://img.youtube.com' />
-      </Head>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin=''
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >

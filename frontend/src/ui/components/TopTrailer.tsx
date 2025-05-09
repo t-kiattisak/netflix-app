@@ -1,6 +1,6 @@
 "use client"
 
-import React, { lazy, Suspense, useEffect, useMemo } from "react"
+import React, { Suspense, useEffect, useMemo } from "react"
 import { CircleAlertIcon, PlayIcon, Volume2, VolumeX } from "lucide-react"
 import { useVideoPlayer } from "@/presentation/providers/VideoPlayerProvider"
 import { movieDetailOptions } from "@/application/useCases/moviesOptions"
@@ -8,9 +8,12 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { getRandomNumber } from "@/presentation/utils"
 import { useInViewport } from "@/presentation/hooks/useInViewport"
 import { useDebouncedValue } from "@/presentation/hooks/useDebouncedValue"
+import dynamic from "next/dynamic"
 
-const YoutubePlayer = lazy(() =>
-  import("./YoutubePlayer").then((m) => ({ default: m.YoutubePlayer }))
+const YoutubePlayer = dynamic(() =>
+  import("@/ui/components/YoutubePlayer").then((m) => ({
+    default: m.YoutubePlayer,
+  }))
 )
 
 type TopTrailerProps = {

@@ -9,11 +9,19 @@ import {
 import { useSuspenseQuery } from "@tanstack/react-query"
 import React, { useMemo } from "react"
 
+const MovieSection = dynamic(
+  () =>
+    import("@/ui/components/MovieSection").then((m) => ({
+      default: m.MovieSection,
+    })),
+  { loading: () => <div style={{ height: 200 }}>Loading section...</div> }
+)
+
 import { TopTrailer } from "@/ui/components/TopTrailer"
 
 import { genreMoviesOptions } from "@/application/useCases/genreOptions"
-import { MovieSection } from "@/ui/components/MovieSection"
 import { useTranslations } from "next-intl"
+import dynamic from "next/dynamic"
 
 export const HomePage = () => {
   const t = useTranslations("Home")
