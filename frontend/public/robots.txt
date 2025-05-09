@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://netflix-app-git-main-t-kiattisaks-projects.vercel.app/sitemap.xml
