@@ -1,12 +1,10 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import videojs from "video.js"
-import type Player from "video.js/dist/types/player"
-import "video.js/dist/video-js.css"
-import "videojs-youtube"
-
+import { useMemo, useState } from "react"
+import YouTube, { YouTubePlayer } from "react-youtube"
+import Image from "next/image"
 import { useVideoPlayer } from "@/presentation/providers/VideoPlayerProvider"
+import Head from "next/head"
 
 type YoutubePlayerProps = {
   videoId: string
@@ -17,56 +15,57 @@ export function YoutubePlayer({
   videoId,
   autoplay = true,
 }: YoutubePlayerProps) {
-  const playerRef = useRef<Player | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-
   const { setPlayer, playOnly } = useVideoPlayer()
+  const [playerReady, setPlayerReady] = useState(false)
 
-  useEffect(() => {
-    if (!containerRef.current || playerRef.current) return
-
-    const videoEl = document.createElement("video-js")
-    containerRef.current.appendChild(videoEl)
-
-    const player = videojs(videoEl, {
-      techOrder: ["youtube"],
-      autoplay,
-      controls: false,
-      loop: true,
-      muted: true,
-      responsive: true,
-      fluid: true,
-      sources: [
-        {
-          type: "video/youtube",
-          src: `https://www.youtube.com/watch?v=${videoId}`,
-        },
-      ],
-      youtube: {
+  const opts = useMemo(
+    () => ({
+      height: "100%",
+      width: "100%",
+      playerVars: {
+        autoplay: autoplay ? 1 : 0,
+        controls: 0,
         modestbranding: 1,
         rel: 0,
-        iv_load_policy: 3,
+        loop: 1,
+        mute: 1,
+        playlist: videoId,
       },
-    })
+    }),
+    [autoplay, videoId]
+  )
 
-    playerRef.current = player
-    setPlayer(videoId, player)
+  const onReady = (event: { target: YouTubePlayer }) => {
+    setPlayer(videoId, event.target)
     playOnly(videoId)
-
-    return () => {
-      if (player && !player.isDisposed()) {
-        player.dispose()
-        playerRef.current = null
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoId])
+    setPlayerReady(true)
+  }
 
   return (
-    <div data-vjs-player className='relative w-full h-full aspect-video'>
-      <div
-        ref={containerRef}
-        className='absolute top-0 left-0 w-full h-[50px] bg-black/40 backdrop-blur-sm z-10 pointer-events-none rounded-t-lg'
+    <div className='relative w-full h-full aspect-video'>
+      <Head>
+        <link
+          rel='preload'
+          as='image'
+          href={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        />
+      </Head>
+      {!playerReady && (
+        <Image
+          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          alt='Video thumbnail'
+          fill
+          className='object-cover rounded-lg'
+          priority
+        />
+      )}
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        loading='lazy'
+        onReady={onReady}
+        className='absolute top-0 left-0 w-full h-full'
+        iframeClassName='w-full h-full rounded-lg'
       />
     </div>
   )

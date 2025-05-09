@@ -39,14 +39,21 @@ export const TopTrailer = ({ movieId }: TopTrailerProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
-  if (isLoading) return <div>...loading</div>
-
+  if (isLoading) {
+    return (
+      <div className='w-full aspect-video bg-neutral-900 animate-pulse'>
+        ...loading
+      </div>
+    )
+  }
   return (
     <div
       className='relative w-full aspect-video bg-black overflow-hidden z-10'
       ref={ref}
     >
-      {videoId && <YoutubePlayer videoId={videoId} />}
+      <div style={{ aspectRatio: "16 / 9", width: "100%" }}>
+        {videoId && <YoutubePlayer videoId={videoId} />}
+      </div>
 
       <div className='absolute inset-0 bg-gradient-to-r from-black/60 to-transparent' />
       <div className='absolute z-50 bottom-0 left-0 right-0 h-[15vw] bg-gradient-to-b from-5% from-transparent to-black/20 md:to-black' />

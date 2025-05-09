@@ -45,17 +45,19 @@ export const MovieSection = ({ title, movies }: MovieSectionProps) => {
           {movies.map((movie, index) => (
             <CarouselItem
               className='px-2 basis-[150px] md:basis-[220px]'
-              key={index}
+              key={`${movie.id}-${index}`}
             >
               <HoverPreviewRoot>
                 <HoverPreviewTrigger>
-                  <div className='relative w-full h-[180px] rounded-[5px]'>
+                  <div className='relative w-full h-[200px] rounded-[5px]'>
                     <Image
                       src={movie.posterUrl}
                       alt={movie.title}
-                      className='object-center object-cover'
-                      fill
-                      sizes='(min-width: 60em) 24vw,(min-width: 28em) 45vw, 100vw'
+                      width={300}
+                      priority
+                      height={200}
+                      className='object-center object-cover rounded-[5px] w-full h-auto'
+                      sizes='(min-width: 1024px) 220px, (min-width: 640px) 150px, 150px'
                     />
                   </div>
                 </HoverPreviewTrigger>

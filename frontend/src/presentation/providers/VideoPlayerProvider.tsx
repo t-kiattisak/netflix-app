@@ -1,13 +1,13 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type Player from "video.js/dist/types/player"
+import type { YouTubePlayer } from "react-youtube"
 import { createSafeContext } from "./CreateSafeContext"
 
 type VideoPlayerContextType = {
-  players: Record<string, Player>
+  players: Record<string, YouTubePlayer>
   mutedMap: Record<string, boolean>
-  setPlayer: (videoId: string, player: Player) => void
+  setPlayer: (videoId: string, player: YouTubePlayer) => void
   toggleMute: (videoId: string) => void
   isMuted: (videoId: string) => boolean
   playOnly: (videoId: string) => void
@@ -26,13 +26,13 @@ export const VideoPlayerProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const playersRef = useRef<Record<string, Player>>({})
+  const playersRef = useRef<Record<string, YouTubePlayer>>({})
   const [mutedMap, setMutedMap] = useState<Record<string, boolean>>({})
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
 
-  const setPlayer = (videoId: string, player: Player) => {
+  const setPlayer = (videoId: string, player: YouTubePlayer) => {
     playersRef.current[videoId] = player
-    player.muted(mutedMap[videoId] ?? true)
+    player.mute()
     setActiveVideoId(videoId)
   }
 
@@ -40,19 +40,27 @@ export const VideoPlayerProvider = ({
     const player = playersRef.current[videoId]
     if (!player) return
 
-    const newMuted = !(mutedMap[videoId] ?? true)
-    player.muted(newMuted)
-    setMutedMap((prev) => ({ ...prev, [videoId]: newMuted }))
+    const currentlyMuted = mutedMap[videoId] ?? true
+    if (currentlyMuted) {
+      player.unMute()
+    } else {
+      player.mute()
+    }
+    setMutedMap((prev) => ({ ...prev, [videoId]: !currentlyMuted }))
   }
 
   const isMuted = (videoId: string) => mutedMap[videoId] ?? true
 
   const playOnly = (videoId: string) => {
     Object.entries(playersRef.current).forEach(([id, player]) => {
-      if (id === videoId) {
-        player.play()
-      } else {
-        player.pause()
+      try {
+        if (id === videoId) {
+          player.playVideo?.()
+        } else {
+          player.pauseVideo?.()
+        }
+      } catch (err) {
+        console.warn("Video control failed for", id, err)
       }
     })
     setActiveVideoId(videoId)
@@ -60,16 +68,20 @@ export const VideoPlayerProvider = ({
 
   const pauseButKeepActive = (videoId: string) => {
     const player = playersRef.current[videoId]
-    if (player) player.pause()
+    player?.pauseVideo()
   }
 
   const pauseVideo = (videoId: string) => {
-    const player = playersRef.current[videoId]
-    if (player) {
-      player.pause()
-      if (activeVideoId === videoId) {
-        setActiveVideoId(null)
+    try {
+      const player = playersRef.current[videoId]
+      if (player) {
+        player.pauseVideo?.()
+        if (activeVideoId === videoId) {
+          setActiveVideoId(null)
+        }
       }
+    } catch (err) {
+      console.warn("Failed to pause video:", err)
     }
   }
 

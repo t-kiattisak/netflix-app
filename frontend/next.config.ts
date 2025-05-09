@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+      },
     ],
     deviceSizes: [640, 768, 1024, 1200],
     imageSizes: [16, 32, 48, 64, 96],

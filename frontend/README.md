@@ -5,7 +5,7 @@
 - **Data Fetching**: TanStack Query v5
 - **Localization (i18n)**: next-intl
 - **Architecture**: Clean Architecture (แบ่ง `domain`, `application`, `infrastructure`, `presentation`, `ui`)
-- **Video Player**: video.js (YouTube embed)
+- **Video Player**: video (YouTube embed)
 
 ## 📁 Project Structure
 
