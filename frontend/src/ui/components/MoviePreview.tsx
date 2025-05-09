@@ -56,6 +56,7 @@ export function MoviePreview({ preview }: { preview: MoviePreviewProps }) {
               </button>
               {videoId && (
                 <button
+                  aria-label={isMuted(videoId) ? "Unmute video" : "Mute video"}
                   onClick={() => toggleMute(videoId)}
                   className='ml-auto rounded-full border p-2 border-white bg-black/60 hover:bg-white/20 transition'
                 >

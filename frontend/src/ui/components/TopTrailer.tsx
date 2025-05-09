@@ -60,6 +60,7 @@ export const TopTrailer = ({ movieId }: TopTrailerProps) => {
 
       <div className='absolute right-6 bottom-1/3 z-50 flex items-center gap-3'>
         <button
+          aria-label={isMuted(videoId) ? "Unmute video" : "Mute video"}
           className='bg-black/60 p-2 rounded-full hover:bg-white/20 transition'
           onClick={() => toggleMute(videoId)}
         >
