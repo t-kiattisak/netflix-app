@@ -6,6 +6,7 @@ import { Providers } from "./providers"
 import { Topbar } from "@/ui/components/layouts/Topbar"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale } from "next-intl/server"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default async function RootLayout({
           <Topbar />
           <Providers>{children}</Providers>
         </NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
