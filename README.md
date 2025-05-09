@@ -36,6 +36,10 @@ Built for real-world use with scalable architecture and modern web technologies.
 
 ---
 
+- 📄 [API Docs (Apidog Export)](./netflix.apidog.json)
+
+---
+
 ## 🧪 Test Metrics
 
 | Metric                   | Desktop | Mobile |
@@ -49,5 +53,5 @@ Built for real-world use with scalable architecture and modern web technologies.
 
 ## 👨‍💻 Author
 
-**เกียรติศักดิ์ จอมรัมย์**  
+**เกียรติศักดิ์ โจมรัมย์**  
 GitHub: [t-kiattisak](https://github.com/t-kiattisak)
