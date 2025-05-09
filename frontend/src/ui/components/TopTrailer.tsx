@@ -1,14 +1,17 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
+import React, { lazy, Suspense, useEffect, useMemo } from "react"
 import { CircleAlertIcon, PlayIcon, Volume2, VolumeX } from "lucide-react"
-import { YoutubePlayer } from "./YoutubePlayer"
 import { useVideoPlayer } from "@/presentation/providers/VideoPlayerProvider"
 import { movieDetailOptions } from "@/application/useCases/moviesOptions"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { getRandomNumber } from "@/presentation/utils"
 import { useInViewport } from "@/presentation/hooks/useInViewport"
 import { useDebouncedValue } from "@/presentation/hooks/useDebouncedValue"
+
+const YoutubePlayer = lazy(() =>
+  import("./YoutubePlayer").then((m) => ({ default: m.YoutubePlayer }))
+)
 
 type TopTrailerProps = {
   movieId: number
@@ -52,7 +55,11 @@ export const TopTrailer = ({ movieId }: TopTrailerProps) => {
       ref={ref}
     >
       <div style={{ aspectRatio: "16 / 9", width: "100%" }}>
-        {videoId && <YoutubePlayer videoId={videoId} />}
+        {videoId && (
+          <Suspense fallback={<div className='bg-black/40 w-full h-full' />}>
+            <YoutubePlayer videoId={videoId} />
+          </Suspense>
+        )}
       </div>
 
       <div className='absolute inset-0 bg-gradient-to-r from-black/60 to-transparent' />

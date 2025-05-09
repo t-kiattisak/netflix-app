@@ -12,7 +12,10 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'production') {
     app.enableCors({
-      origin: 'https://netflix-app-git-main-t-kiattisaks-projects.vercel.app',
+      origin: [
+        'https://netflix-app-git-main-t-kiattisaks-projects.vercel.app',
+        'https://netflix-app-self-beta.vercel.app',
+      ],
     });
   } else {
     app.enableCors();
