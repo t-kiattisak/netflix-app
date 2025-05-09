@@ -1,4 +1,4 @@
-# 🎬 Netflix App – Fullstack Clone Project
+# 🎬 Netflix App – Fullstack
 
 A high-performance, SEO-friendly streaming platform inspired by Netflix.  
 Built for real-world use with scalable architecture and modern web technologies.
