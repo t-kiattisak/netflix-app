@@ -16,6 +16,11 @@ export class TmdbMovieRepositoryImpl {
 
   async fetchPopular(): Promise<TmdbMovieResponse> {
     try {
+      this.logger.log(`BaseURL: ${this.httpService.axiosRef.defaults.baseURL}`);
+      this.logger.log(
+        `TOKEN: ${JSON.stringify(this.httpService.axiosRef.defaults.headers.common.Authorization)}`,
+      );
+      this.logger.log(`Calling /movie/popular`);
       const res = await firstValueFrom(
         this.httpService.get<TmdbMovieResponse>('/movie/popular'),
       );
