@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -21,6 +22,8 @@ async function bootstrap() {
     app.enableCors();
   }
 
+  //  HTTP security headers (Content Security Policy, XSS, etc.)
+  app.use(helmet());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

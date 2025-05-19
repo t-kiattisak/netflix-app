@@ -30,6 +30,11 @@ import { GenreRepository } from '@/domain/repositories/genre.repository';
       },
     }),
   ],
+  // MovieRepository (interface)
+  //     ↑
+  // useExisting → TmdbMovieRepository (class)
+  //                     ↑
+  //           inject → TmdbMovieRepositoryImpl
   providers: [
     TmdbMovieRepositoryImpl,
     TmdbMovieRepository,
@@ -38,10 +43,10 @@ import { GenreRepository } from '@/domain/repositories/genre.repository';
       useExisting: TmdbMovieRepository,
     },
     TmdbGenreRepositoryImpl,
-    TmdbGenreRepository,
+    TmdbGenreRepository, // สร้าง instance จริง
     {
-      provide: GenreRepository,
-      useExisting: TmdbGenreRepository,
+      provide: GenreRepository, // token ที่ use-case ใช้เรียก
+      useExisting: TmdbGenreRepository, // ให้ใช้ instance เดิมที่สร้างไปแล้ว
     },
   ],
   exports: [MovieRepository, GenreRepository],

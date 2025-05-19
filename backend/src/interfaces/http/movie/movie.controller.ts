@@ -5,11 +5,13 @@ import { plainToInstance } from 'class-transformer';
 import { MoviesUseCase } from '@/application/use-cases/movies.usecase';
 import { TrendingMovieDto } from './dtos/trending-movie.dto';
 import { MovieDetailDto } from './dtos/movie-detail.dto';
+// import { Throttle } from '@nestjs/throttler';
 
 @Controller('movies')
 export class MovieController {
   constructor(private readonly useCase: MoviesUseCase) {}
 
+  // @Throttle({ default: { limit: 3, ttl: 60000 } })
   @Get('popular')
   @ApiOperation({ summary: 'Get popular movies' })
   @ApiResponse({
